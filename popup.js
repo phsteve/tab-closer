@@ -1,5 +1,6 @@
 let tabInfo = document.getElementById("tabInfo");
 
+
 let freqs = {}
 
 // tab example
@@ -24,18 +25,18 @@ let freqs = {}
 // "windowId":602},
 
 chrome.tabs.query({}, (tabs) => {
+  let tabList = document.getElementById("tabList");
   tabs.forEach(tab => {
     try {
       let url = new URL(tab.url)
-      console.log(`got ${url.hostname}`)
       if (freqs.hasOwnProperty(url.hostname)) {
         freqs[url.hostname]++
       } else {
         freqs[url.hostname] = 1
-        console.log(JSON.stringify(freq))
       }
     } catch(err) {
-      console.log(`skipping invalid url: ${tab.url}`)
+      console.log(`err: ${err}`)
+      console.log(`skipping invalid url when populating: ${tab.url}`)
       return
     }
 
@@ -47,6 +48,37 @@ chrome.tabs.query({}, (tabs) => {
   sortedTabs.sort((a, b) => {
     return b[1] - a[1]
   });
-  console.log(JSON.stringify(sortedTabs))
-  tabInfo.innerHTML = JSON.stringify(sortedTabs)
+  console.log("sorted tabs")
+  sortedTabs.forEach(tab => {
+    item = document.createElement("li")
+    button = document.createElement("button")
+    button.innerHTML = "Close"
+    button.setAttribute("hostname", tab[0])
+    button.addEventListener('click', closeTabs)
+    text = document.createTextNode(`${tab[1]} from ${tab[0]}`)
+    item.appendChild(button)
+    item.appendChild(text)
+    tabList.appendChild(item)
+  })
 });
+
+const closeTabs = (event) => {
+  let buttonHostname = event.target.getAttribute('hostname')
+  chrome.tabs.query({}, (tabs) => {
+    tabs.forEach((tab) => {
+      try {
+        let url = new URL(tab.url)
+        if (url.hostname == buttonHostname) {
+          chrome.tabs.remove(tab.id, () => {
+            console.log(`closed id: ${tab.id} hostname: ${buttonHostname}`)            
+          })
+        }
+      } catch(err) {
+        console.log(`err: ${err}`)        
+        console.log(`skipping invalid url when closing: ${tab.url}`)
+        return
+      }
+
+    })
+  })
+}
