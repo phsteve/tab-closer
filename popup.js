@@ -30,6 +30,7 @@ chrome.tabs.query({}, (tabs) => {
   console.log('sorted tabs: ' + sortedTabs)
   for (const tab of sortedTabs) {
     li = document.createElement("li")
+    li.setAttribute("id", tab[0])
     button = document.createElement("button")
     button.innerHTML = "Close"
     button.setAttribute("hostname", tab[0])
@@ -60,4 +61,6 @@ const closeTabsByHostname = (event) => {
       }
     }
   })
+  const li = document.getElementById(buttonHostname)
+  li.remove()
 }
