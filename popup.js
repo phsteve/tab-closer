@@ -1,7 +1,7 @@
 chrome.tabs.query({}, (tabs) => {
   const tabList = document.getElementById("tabList");
   const counts = new Map()
-  tabs.forEach(tab => {
+  for (const tab of tabs) {
     try {
       const tabUrl = tab.url ? new URL(tab.url) : { hostname: "" }
       curr = counts.get(tabUrl.hostname)
@@ -15,7 +15,7 @@ chrome.tabs.query({}, (tabs) => {
       console.log(`err: ${err}`)
       console.log(`skipping invalid url from tab ${tab.id}: -${tab.url}-`)
     }
-  })
+  }
   // convert counts to array so we can sort it by hostname count
   sortedTabs = []
   console.log('counts:')
@@ -24,10 +24,11 @@ chrome.tabs.query({}, (tabs) => {
     sortedTabs.push([hostname, count])
   };
   sortedTabs.sort((a, b) => {
+    // sort descending
     return b[1] - a[1]
   });
   console.log('sorted tabs: ' + sortedTabs)
-  sortedTabs.forEach(tab => {
+  for (const tab of sortedTabs) {
     li = document.createElement("li")
     button = document.createElement("button")
     button.innerHTML = "Close"
@@ -38,14 +39,13 @@ chrome.tabs.query({}, (tabs) => {
     li.appendChild(button)
     li.appendChild(text)
     tabList.appendChild(li)
-  })
-  console.log('done')
+  }
 });
 
 const closeTabsByHostname = (event) => {
   const buttonHostname = event.target.getAttribute('hostname')
   chrome.tabs.query({}, (tabs) => {
-    tabs.forEach((tab) => {
+    for (const tab of tabs) {
       try {
         const url = new URL(tab.url)
         if (url.hostname == buttonHostname) {
@@ -58,7 +58,6 @@ const closeTabsByHostname = (event) => {
         console.log(`skipping invalid url when closing: ${tab.url}`)
         return
       }
-
-    })
+    }
   })
 }
