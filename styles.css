@@ -1,0 +1,15 @@
+body {
+  min-width: 400px;
+}
+
+button {
+  height: 30px;
+  margin: 10px;
+  border-radius: 4px;
+  text-align: center;
+  transition-duration: 0.4s;
+}
+
+button:hover {
+  background-color: darkgray;
+}
