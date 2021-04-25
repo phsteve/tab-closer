@@ -27,8 +27,8 @@ chrome.tabs.query({}, (tabs) => {
     button.setAttribute("hostname", tab[0])
     button.setAttribute("style", "background-color:f14e4e")
     button.addEventListener('click', closeTabsByHostname)
-    const displayName = tab[0] ? tab[0] : "(empty URL)"
-    const text = document.createTextNode(`${tab[1]} from ${displayName}`)
+    const displayName = tab[0] || "(empty URL)"
+    const text = document.createTextNode(`${tab[1]} tabs from ${displayName}`)
     li.appendChild(button)
     li.appendChild(text)
     tabList.appendChild(li)
