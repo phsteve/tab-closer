@@ -6,7 +6,7 @@ Got 37 Stack Overflow tabs open? 19 Twitter tabs? Close all tabs from a single s
 
 Follow https://developer.chrome.com/docs/webstore/publish/. To create the zip file, run:
 ```
-zip -r tab-closer.zip . -x '*.git*'
+zip -r tab-closer.zip . -x '*.git*' '*.swp'
 ```
 
 <a target="_blank" href="/images/icons8-close-tab-48.png">Close Tab icon</a> by <a target="_blank" href="https://icons8.com">Icons8</a>
