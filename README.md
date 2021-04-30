@@ -2,6 +2,10 @@
 
 Got 37 Stack Overflow tabs open? 19 Twitter tabs? Close all tabs from a single site across all your Chrome windows with one click by using this Chrome extension.
 
+## Install
+
+Add the extension to Chrome [here](https://chrome.google.com/webstore/detail/tab-closer/cpibodjkbnfnjgahgbjecnkeflbeamje).
+
 ## Release
 
 Follow https://developer.chrome.com/docs/webstore/publish/. To create the zip file, run:
